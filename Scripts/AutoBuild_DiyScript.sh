@@ -146,7 +146,7 @@ EOF
 			Copy ${CustomFiles}/speedtest ${BASE_FILES}/usr/bin
 			chmod +x ${BASE_FILES}/usr/bin/speedtest
 		;;
-		xiaomi_redmi-router-ax6s)
+		xiaomi_redmi-router-ax6000)
 			AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
 			AddPackage passwall-luci xiaorouji openwrt-passwall main
 		;;
