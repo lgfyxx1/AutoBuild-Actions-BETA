@@ -176,7 +176,7 @@ EOF
 	;;
 	padavanonly/immortalwrtARM*)
 		case "${TARGET_PROFILE}" in
-		xiaomi_redmi-router-ax6s)
+		xiaomi_redmi-router-ax6000)
 			:
 		;;
 		esac
