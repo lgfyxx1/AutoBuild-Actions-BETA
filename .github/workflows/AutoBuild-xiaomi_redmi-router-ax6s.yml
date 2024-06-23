@@ -39,21 +39,21 @@ on:
 ### 环境变量设置
 env:
 # 编译时调用的 [.config] 文件名称
-  CONFIG_FILE: xiaomi_redmi-router-ax6s
-# 源码仓库:分支
-  DEFAULT_SOURCE: coolsnowwolf/lede:master
+  CONFIG_FILE: xiaomi_redmi-router-ax6000
+# 源码仓库:分支coolsnowwolf/lede:master 
+  DEFAULT_SOURCE: padavanonly/immortalwrt-mt798x:openwrt-21.02
 # 上传固件到 Github Releases
   UPLOAD_RELEASES: true
 # 上传固件到 Github Artifacts
-  UPLOAD_ARTIFACTS: false
+  UPLOAD_ARTIFACTS: true
 # 上传 bin 文件夹到 Github Artifacts
-  UPLOAD_BIN_ARTIFACTS: false
+  UPLOAD_BIN_ARTIFACTS: true
 # 删除无用文件以增加编译空间
   DELETE_USELESS_FILES: true
 # 删除早期的 workflow 任务
   DELETE_OLD_WORKFLOW: false
 # Cache 加速编译
-  CACHE_ACCELERATE: false
+  CACHE_ACCELERATE: true
 ### 结束
 ### 请按需求修改以上内容
 
