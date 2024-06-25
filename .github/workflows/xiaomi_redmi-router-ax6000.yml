@@ -41,7 +41,7 @@ env:
 # 编译时调用的 [.config] 文件名称
   CONFIG_FILE: xiaomi_redmi-router-ax6000
 # 源码仓库:分支coolsnowwolf/lede:master 
-  DEFAULT_SOURCE: padavanonly/immortalwrt-mt798x:openwrt-21.02
+  DEFAULT_SOURCE: hanwckf/immortalwrt-mt798x:openwrt-21.02
 # 上传固件到 Github Releases
   UPLOAD_RELEASES: true
 # 上传固件到 Github Artifacts
@@ -53,7 +53,7 @@ env:
 # 删除早期的 workflow 任务
   DELETE_OLD_WORKFLOW: false
 # Cache 加速编译
-  CACHE_ACCELERATE: true
+  CACHE_ACCELERATE: false
 ### 结束
 ### 请按需求修改以上内容
 
