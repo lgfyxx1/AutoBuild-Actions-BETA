@@ -39,7 +39,7 @@ on:
 ### 环境变量设置
 env:
 # 编译时调用的 [.config] 文件名称
-  CONFIG_FILE: xiaomi_redmi-router-ax6000
+  CONFIG_FILE: redmi_ax6000
 # 源码仓库:分支coolsnowwolf/lede:master 
   DEFAULT_SOURCE: hanwckf/immortalwrt-mt798x:openwrt-21.02
 # 上传固件到 Github Releases
