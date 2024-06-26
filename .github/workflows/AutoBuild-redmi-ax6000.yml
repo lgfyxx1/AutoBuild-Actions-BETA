@@ -161,6 +161,7 @@ jobs:
         git clone -b $REPO_BRANCH $REPO_URL openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         cd openwrt
+        echo "src-git openwrt_kiddin9 https://github.com/kiddin9/openwrt-packages.git" >> "feeds.conf.default"
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         
