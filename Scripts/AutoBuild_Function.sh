@@ -2,7 +2,7 @@
 # AutoBuild Module by Hyy2001 <https://github.com/Hyy2001X/AutoBuild-Actions-BETA>
 # AutoBuild Functions
 
-##-----------------Add OpenClash dev core------------------
+##-----------------Add OpenClash dev core自定义------------------
 ECHO "Add OpenClash dev core started"
 curl -sL -m 30 --retry 2 https://raw.githubusercontent.com/vernesong/OpenClash/master/core-lateset/dev/clash-linux-arm64.tar.gz -o /tmp/clash.tar.gz
 tar zxvf /tmp/clash.tar.gz -C /tmp >/dev/null 2>&1
