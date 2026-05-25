@@ -21,7 +21,7 @@ Firmware_Diy_Core() {
 	Default_Flag=AUTO
 	# 固件标签 (名称后缀), 适用不同配置文件, AUTO: [自动识别]
 	
-	Default_IP="192.168.1.1"
+	Default_IP="192.168.3.10"
 	# 固件 IP 地址
 	
 	Default_Title="Powered by AutoBuild-Actions"
@@ -183,6 +183,34 @@ EOF
 	;;
 	hanwckf/immortalwrt-mt798x*)
 		case "${TARGET_PROFILE}" in
+		xiaomi_redmi-router-ax6000)
+			# 升级 golang 到 26.x，支持新版 Go 包编译
+			rm -rf ${WORK}/feeds/packages/lang/golang
+			git clone --depth 1 https://github.com/sbwml/packages_lang_golang -b 26.x ${WORK}/feeds/packages/lang/golang
+
+			# 移除 feeds 中的旧版/冲突包，防止与 AddPackage 包产生重复
+			rm -rf ${FEEDS_PKG}/xray-core ${WORK}/feeds/packages/net/xray-core 2>/dev/null || true
+			rm -rf ${FEEDS_PKG}/xray-plugin ${WORK}/feeds/packages/net/xray-plugin 2>/dev/null || true
+			rm -rf ${FEEDS_LUCI}/luci-app-passwall ${WORK}/feeds/luci/applications/luci-app-passwall 2>/dev/null || true
+
+			# 添加第三方插件包（直接克隆到 package 目录，绕过 feeds 系统）
+			AddPackage other fw876 helloworld dev
+			AddPackage other vernesong OpenClash master
+			AddPackage other linkease istore main
+			AddPackage passwall Openwrt-Passwall openwrt-passwall-packages main
+			AddPackage passwall Openwrt-Passwall openwrt-passwall main
+
+			# 修改默认 IP（Firmware_Diy_Main 使用全局 Default_IP，此处确保 AX6000 使用正确 IP）
+			sed -i 's/192.168.1.1/192.168.3.10/g' ${BASE_FILES}/bin/config_generate
+
+			# 下载 OpenClash Meta (Mihomo) 核心
+			curl -sL -m 30 --retry 2 https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz -o /tmp/clash_meta.tar.gz
+			tar zxf /tmp/clash_meta.tar.gz -C /tmp >/dev/null 2>&1
+			chmod +x /tmp/clash
+			mkdir -p ${WORK}/package/other/OpenClash/luci-app-openclash/root/etc/openclash/core
+			mv /tmp/clash ${WORK}/package/other/OpenClash/luci-app-openclash/root/etc/openclash/core/clash_meta
+			rm -f /tmp/clash_meta.tar.gz
+		;;
 		cmcc_rax3000m | jcg_q30)
 			AddPackage passwall xiaorouji openwrt-passwall main
 			AddPackage other sbwml luci-app-mosdns v5
