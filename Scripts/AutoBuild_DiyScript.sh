@@ -184,9 +184,12 @@ EOF
 	hanwckf/immortalwrt-mt798x*)
 		case "${TARGET_PROFILE}" in
 		xiaomi_redmi-router-ax6000)
-			# 升级 golang 到 26.x，支持新版 Go 包编译
+			# 升级 golang 到上游最新分支（Xray-core 等新版 Go 包会持续提高 Go 版本要求）
+			GOLANG_BRANCH=$(git ls-remote --heads https://github.com/sbwml/packages_lang_golang | awk -F'refs/heads/' '{print $2}' | grep -E '^[0-9]+\.x$' | sort -V | tail -n1)
+			[ -z "${GOLANG_BRANCH}" ] && GOLANG_BRANCH=27.x
+			echo "Using golang branch: ${GOLANG_BRANCH}"
 			rm -rf ${WORK}/feeds/packages/lang/golang
-			git clone --depth 1 https://github.com/sbwml/packages_lang_golang -b 26.x ${WORK}/feeds/packages/lang/golang
+			git clone --depth 1 https://github.com/sbwml/packages_lang_golang -b ${GOLANG_BRANCH} ${WORK}/feeds/packages/lang/golang
 
 			# 移除 feeds 中的旧版/冲突包，防止与 AddPackage 包产生重复
 			rm -rf ${FEEDS_PKG}/xray-core ${WORK}/feeds/packages/net/xray-core 2>/dev/null || true
