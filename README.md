@@ -44,11 +44,19 @@ AutoBuild-Actions 稳定版仓库地址: [AutoBuild-Actions-Template](https://gi
 
 4. 编辑`.github/workflows/***.yml`文件, 修改`第 32 行 CONFIG_FILE:`, 填写你添加到`Configs`目录下的配置名称
 
-5. 根据需求编辑 [Scripts/AutoBuild_DiyScript.sh](./Scripts/AutoBuild_DiyScript.sh)
-   
-添加软件包、其他定制选项请在 `Firmware_Diy()` 函数中编写, `Scripts`目录下的其他文件无需修改
+5. 公共参数与 AX6000 定制请编辑 [Scripts/AutoBuild_Custom.sh](./Scripts/AutoBuild_Custom.sh)。该文件由 `AutoBuild_DiyScript.sh` 自动加载，无需修改工作流。
 
-**Scripts/AutoBuild_DiyScript.sh: Firmware_Diy_Core() 函数中的变量:**
+| 配置内容 | 维护位置 |
+| --- | --- |
+| 公共参数：默认 IP、作者、AutoBuild 特性等 | `AutoBuild_Custom.sh` → `Firmware_Diy_Core()` |
+| AutoUpdate 软件包来源（所有设备共用） | `AutoBuild_Custom.sh` → `Firmware_Packages_AutoUpdate()` |
+| AX6000 插件仓库/分支、Go 升级、冲突包清理、Mihomo 核心下载 | `AutoBuild_Custom.sh` → `Firmware_Diy_AX6000()` |
+| AX6000 插件启用/停用、Xray 等编译选项 | [Configs/redmi_ax6000](./Configs/redmi_ax6000) |
+| 其他设备的定制逻辑 | [Scripts/AutoBuild_DiyScript.sh](./Scripts/AutoBuild_DiyScript.sh) → `Firmware_Diy()` |
+
+AX6000 的新脚本保留现有源码来源和执行顺序。AList、SSR Plus+、OpenClash 的 LuCI 界面包当前仍使用上游 `feeds.conf.default` 指定的 `immortalwrt/luci` 的 `openwrt-21.02` 分支；额外克隆的同名包未在此次拆分中替换 feeds 版本。
+
+**Scripts/AutoBuild_Custom.sh: Firmware_Diy_Core() 函数中的变量:**
 ```
    Author 作者名称, AUTO: [自动识别]
    
